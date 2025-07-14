@@ -4,7 +4,6 @@ import (
 	"github.com/NyanDesuyo/flashcard-service/config"
 	"github.com/NyanDesuyo/flashcard-service/dto"
 	"github.com/NyanDesuyo/flashcard-service/models"
-	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
@@ -12,8 +11,6 @@ import (
 	"os"
 	"time"
 )
-
-var validate = validator.New()
 
 func Register(c *fiber.Ctx) error {
 	req := new(dto.UserRequest)
@@ -114,6 +111,7 @@ func Login(c *fiber.Ctx) error {
 	claims := jwt.MapClaims{
 		"username": user.Username,
 		"uuid":     user.UUID.String(),
+		"id":       user.ID,
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),
 	}
 
