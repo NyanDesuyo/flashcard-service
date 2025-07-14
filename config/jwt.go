@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/NyanDesuyo/flashcard-service/dto"
 	"github.com/gofiber/fiber/v2"
 	"log"
 	"os"
@@ -15,6 +16,25 @@ func JWTMiddleware() fiber.Handler {
 	}
 
 	return jwtware.New(jwtware.Config{
-		SigningKey: jwtware.SigningKey{Key: []byte(jwtSecret)},
+		SigningKey:   jwtware.SigningKey{Key: []byte(jwtSecret)},
+		ErrorHandler: jwtErrorHandler,
 	})
+}
+
+func jwtErrorHandler(c *fiber.Ctx, err error) error {
+	if err.Error() == "Missing or malformed JWT" {
+		result := dto.GeneralResponseError{
+			Message: "Missing or malformed JWT",
+			Error:   err.Error(),
+		}
+
+		return c.Status(fiber.StatusBadRequest).JSON(result)
+	}
+
+	result := dto.GeneralResponseError{
+		Message: "Invalid or expired JWT",
+		Error:   err.Error(),
+	}
+
+	return c.Status(fiber.StatusUnauthorized).JSON(result)
 }
