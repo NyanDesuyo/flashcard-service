@@ -35,6 +35,7 @@ func main() {
 
 	flashcard := app.Group("/flashcard")
 	flashcard.Post("/create", controller.Create)
+	flashcard.Get("/read", controller.Read)
 
 	app.Listen(":8080")
 }
