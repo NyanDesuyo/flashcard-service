@@ -21,10 +21,9 @@ func main() {
 		})
 	})
 
-	app.Post(
-		"/user/register",
-		controller.Register,
-	)
+	user := app.Group("/user")
+	user.Post("/register", controller.Register)
+	user.Post("/login", controller.Login)
 
 	app.Use(config.JWTMiddleware())
 
