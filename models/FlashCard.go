@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-type Flashcard struct {
+type FlashCard struct {
 	gorm.Model
 	Front  string `gorm:"not null"`
 	Back   string `gorm:"not null"`

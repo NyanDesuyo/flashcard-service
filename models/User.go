@@ -11,5 +11,5 @@ type User struct {
 	Username string    `gorm:"unique;not null"`
 	Password string    `gorm:"gorm:not null"`
 
-	Flashcards []Flashcard
+	Flashcards []FlashCard
 }
