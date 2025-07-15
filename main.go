@@ -37,5 +37,9 @@ func main() {
 	flashcard.Post("/create", controller.Create)
 	flashcard.Get("/read", controller.Read)
 
+	pack := app.Group("/pack")
+	pack.Post("/create", controller.CreatePack)
+	pack.Post("/add-flashcard", controller.AddFlashcardToPack)
+
 	app.Listen(":8080")
 }
