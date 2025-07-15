@@ -13,4 +13,5 @@ func init() {
 func main() {
 	config.MainDB.AutoMigrate(&models.User{})
 	config.MainDB.AutoMigrate(&models.FlashCard{})
+	config.MainDB.AutoMigrate(&models.Pack{})
 }
