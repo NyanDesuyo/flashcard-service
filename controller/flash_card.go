@@ -98,6 +98,28 @@ func Read(c *fiber.Ctx) error {
 	})
 }
 
+func ReadRandom(c *fiber.Ctx) error {
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userID := uint(claims["id"].(float64))
+
+	var flashCards models.FlashCard
+	result := config.MainDB.Where("user_id = ?", userID).Order("RANDOM()").First(&flashCards)
+	if result.Error != nil {
+		response := dto.GeneralResponseError{
+			Message: "Cannot Get FlashCards",
+			Error:   result.Error.Error(),
+		}
+
+		return c.Status(fiber.StatusInternalServerError).JSON(response)
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "Success Get FlashCards",
+		"data":    flashCards,
+	})
+}
+
 func Update(c *fiber.Ctx) error {
 	user := c.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
