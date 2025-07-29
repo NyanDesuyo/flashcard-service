@@ -12,5 +12,4 @@ type User struct {
 	Password string    `gorm:"gorm:not null"`
 
 	Flashcards []FlashCard
-	Packs      []Pack
 }
