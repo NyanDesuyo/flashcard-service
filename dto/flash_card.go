@@ -10,3 +10,8 @@ type ReadFlashCardResponse struct {
 	Front   string `json:"front"`
 	Back    string `json:"back"`
 }
+
+type UpdateFlashCardRequest struct {
+	Front *string `json:"front,omitempty"`
+	Back  *string `json:"back,omitempty"`
+}
